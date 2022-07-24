@@ -2,7 +2,10 @@ import csv
 import datetime
 import dateutil.parser
 
-def analyze(data) -> dict:
+
+def analyze(data) -> list:
+    # タスク3の処理を行う関数
+
     # 歩道禁止区域の緯度経度
     lat1 = 35.025184
     lat2 = 35.025359
@@ -27,26 +30,32 @@ def analyze(data) -> dict:
 
         if lat1 < float(lat) < lat2 and lon1 < float(lon) < lon2:
 
-            if row['detect'] == 'sidewalk' and float(row['confidence']) > 0.998:  # 座標で絞る　アプリで実験して確認
-                if float(row['sidewalk_bdbox_min']) > 0.30 and (
-                        float(row['sidewalk_bdbox_min']) + float(row['sidewalk_bdbox_width'])) < 0.70:
+            if row['detect'] == 'sidewalk':
+                if float(row['sidewalk_bdbox_min']) > 0.25 and (float(row['sidewalk_bdbox_min']) + float(
+                        row['sidewalk_bdbox_width'])) < 0.65:  # BoundingBoxの座標で絞る　やや左寄りの中央40%
                     last_detect_time = current_time
                     first_detect_flag = True
                     judge_range_flag = False
-                    # print('detected')
+                    print('detected')
             else:
                 if current_time - last_detect_time >= datetime.timedelta(
-                        seconds=5) or current_time - first_time >= datetime.timedelta(seconds=5):
-                    # print('genten')  # 違反件数をカウントしていく
-                    result.append({'timestamp': row['timestamp'], 'lat': lat, 'lon': lon})
-                    first_detect_flag = False
-                    judge_range_flag = False
-
+                        seconds=10) or current_time - first_time >= datetime.timedelta(seconds=10):
+                    if float(row['speed']) > 2.2:  # 一定以上スピードを出してる = 自転車に乗ってる？
+                        print('genten')  # 違反件数をカウントしていく
+                        result.append(
+                            {
+                                'timestamp': row['timestamp'],
+                                'lat': row['lat'],
+                                'lon': row['lon']
+                            }
+                        )
+                        first_detect_flag = False
+                        judge_range_flag = False
         else:
             first_detect_flag = False
             judge_range_flag = False
 
-    # print(result)
+    print(result)
 
     return result
 
