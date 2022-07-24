@@ -3,8 +3,8 @@ services:
   flask:
     build: .
     command: python3 app/app.py
-    ports:
-      - "5001:5001"
+    expose:
+      - "5001"
 
   nginx:
     image: nginx:latest
