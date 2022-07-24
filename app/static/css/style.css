@@ -1,0 +1,40 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    grid-template-rows: 100px 1fr 100px;
+    grid-gap: 2px;
+    grid-template-areas:
+        "head head"
+        "main side"
+        "foot foot";
+}
+
+#header,
+#contents,
+#sidebar,
+#footer {
+    font-weight: bold;
+    color: #666;
+    background: #d3d3d3;
+    padding: 10px;
+}
+
+#header {
+    grid-area: head;
+}
+
+#contents {
+    grid-area: main;
+    height: 600px;
+}
+
+#sidebar {
+    grid-area: side;
+}
+
+#footer {
+    grid-area: foot;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}

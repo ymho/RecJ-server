@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>スコア化アプリ</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <div id="header">
+        <p>スコアレポート番号：{{uuid}}</p>
+    </div>
+    <div id="contents">
+        <!-- <iframe id="iframe_id" src={{url}} width="600" height="400" frameborder="0" style="border:0"
+            allowfullscreen></iframe> -->
+        <iframe id="iframe_id" src="{{ url_for }}" width="600" height="400" frameborder="0"
+            style="border:0" allowfullscreen></iframe>
+
+    </div>
+    <div id="sidebar">
+        <p>運転結果：{{score}}</p>
+        <p>人混み減点回数：{{hitogomi}}</p>
+        <p>止まれ減点回数：{{tomare}}</p>
+        <p>歩道禁止区域通行減点回数：{{sidewalk}}</p>
+        <p>急ブレーキ減点回数：{{kyu}}</p>
+    </div>
+</body>
+
+</html>

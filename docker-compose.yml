@@ -1,14 +1,10 @@
 version: '3'
 services:
   flask:
-    command: python app.py
-    restart: always
     build: .
-    container_name: 'python3'
-    working_dir: '/app/'
-    tty: true
+    command: python3 app/app.py
     ports:
-      - "5000:5000"
+      - "5001:5001"
 
   nginx:
     image: nginx:latest
@@ -30,6 +26,6 @@ services:
       - default
       - common
 
-  networks:
-    common:
-      external: true
+networks:
+  common:
+    external: true
